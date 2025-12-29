@@ -95,6 +95,31 @@ input[type="range"]::-moz-range-thumb {
     }
 }
 
+/* 🎹 兒童模式：更大的鍵盤 */
+.piano-keyboard.kids-mode {
+    width: 100% !important;
+    height: 250px !important;
+}
+
+@media (min-width: 768px) {
+    .piano-keyboard.kids-mode {
+        height: 300px !important;
+    }
+}
+
+@media (min-width: 1024px) {
+    .piano-keyboard.kids-mode {
+        height: 350px !important;
+    }
+}
+
+/* 兒童模式白鍵 */
+.piano-keyboard.kids-mode .piano-key {
+    flex: 1;
+    width: auto !important;
+    min-width: 40px;
+}
+
 /* 白鍵 */
 .piano-key {
     position: relative;
@@ -450,6 +475,12 @@ input[type="range"]::-moz-range-thumb {
 #waterfall-container {
     display: block;
     overflow: hidden;
+}
+
+/* 兒童模式：瀑布流和鋼琴佔滿寬度 */
+#waterfall-container.kids-mode,
+#piano-container.kids-mode {
+    width: 100% !important;
 }
 
 /* 鋼琴容器 */

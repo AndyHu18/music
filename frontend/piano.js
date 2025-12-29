@@ -68,6 +68,11 @@ class PianoKeyboard {
         const keyboard = document.createElement('div');
         keyboard.className = 'piano-keyboard';
 
+        // 🎹 兒童模式：添加 class 讓鍵盤更大
+        if (this.kidsMode) {
+            keyboard.classList.add('kids-mode');
+        }
+
         for (let pitch = this.minPitch; pitch <= this.maxPitch; pitch++) {
             const noteIndex = pitch % 12;
             const octave = Math.floor(pitch / 12) - 1;

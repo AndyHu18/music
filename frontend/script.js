@@ -227,6 +227,16 @@ async function loadBuiltInSong(songId) {
  */
 function switchToKidsMode(enabled) {
     const pianoContainer = document.getElementById('piano-container');
+    const waterfallContainer = document.getElementById('waterfall-container');
+
+    // 添加/移除 kids-mode class
+    if (enabled) {
+        pianoContainer.classList.add('kids-mode');
+        waterfallContainer.classList.add('kids-mode');
+    } else {
+        pianoContainer.classList.remove('kids-mode');
+        waterfallContainer.classList.remove('kids-mode');
+    }
 
     // 清除現有鍵盤
     if (piano) {
@@ -237,14 +247,13 @@ function switchToKidsMode(enabled) {
     piano = new PianoKeyboard('piano-container', { kidsMode: enabled });
 
     // 重新創建瀑布流（匹配琴鍵範圍）
-    const waterfallContainer = document.getElementById('waterfall-container');
     if (waterfall) {
         waterfallContainer.innerHTML = '';
     }
 
     waterfall = new WaterfallRenderer('waterfall-container', {
         pixelsPerSecond: 150,
-        noteHeight: 6,
+        noteHeight: 8, // 兒童模式用更大的音符
         lookahead: 2,
         kidsMode: enabled,
         noteColors: {
