@@ -16,8 +16,11 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import StreamingResponse, JSONResponse, FileResponse
 from pydantic import BaseModel, HttpUrl
 
-# 內部模組
-from analyzer import process_youtube
+# 內部模組 - 支援本地開發和 Docker 部署
+try:
+    from backend.analyzer import process_youtube  # Docker 環境
+except ImportError:
+    from analyzer import process_youtube  # 本地開發
 
 # 配置
 OUTPUT_DIR = Path(__file__).parent / "output"
