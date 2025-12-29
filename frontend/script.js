@@ -263,6 +263,26 @@ function switchToKidsMode(enabled) {
         }
     });
 
+    // 🎹 兒童模式：讓鋼琴區突破容器限制，佔滿螢幕
+    const pianoSection = document.getElementById('piano-section');
+    const mainContainer = document.querySelector('main');
+
+    if (enabled) {
+        // 讓鋼琴區域突破容器限制
+        pianoSection.style.marginLeft = 'calc(-50vw + 50%)';
+        pianoSection.style.marginRight = 'calc(-50vw + 50%)';
+        pianoSection.style.width = '100vw';
+        pianoSection.style.maxWidth = '100vw';
+        pianoSection.style.padding = '0 16px';
+    } else {
+        // 恢復正常
+        pianoSection.style.marginLeft = '';
+        pianoSection.style.marginRight = '';
+        pianoSection.style.width = '';
+        pianoSection.style.maxWidth = '';
+        pianoSection.style.padding = '';
+    }
+
     console.log('📍[App] 兒童模式:', enabled ? '開啟' : '關閉');
 }
 
