@@ -22,5 +22,5 @@ COPY frontend/ ./frontend/
 # Expose port
 EXPOSE 8000
 
-# Start command - use sh -c to properly expand $PORT
-CMD ["sh", "-c", "uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+# Start command - 使用固定端口 8000
+CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
