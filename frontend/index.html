@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube 鋼琴視覺化播放器</title>
+    <meta name="description" content="將 YouTube 純鋼琴音樂轉換為 MIDI 並即時視覺化播放">
+
+    <!-- Favicon (使用 SVG emoji) -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎹</text></svg>">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        surface: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    },
+                    animation: {
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+                        'key-press': 'key-press 0.15s ease-out',
+                    },
+                    keyframes: {
+                        'pulse-glow': {
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(14, 165, 233, 0.3)' },
+                            '50%': { boxShadow: '0 0 40px rgba(14, 165, 233, 0.6)' },
+                        },
+                        'key-press': {
+                            '0%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(3px)' },
+                            '100%': { transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Tone.js (使用 cdnjs CDN，並提供 fallback) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js" crossorigin="anonymous"
+        referrerpolicy="no-referrer" onerror="loadToneFallback()"></script>
+    <script>
+        // Tone.js 載入失敗的備援方案
+        function loadToneFallback() {
+            console.warn('📍[App] cdnjs 載入失敗，嘗試 unpkg...');
+            const script = document.createElement('script');
+            script.src = 'https://unpkg.com/tone@14.9.20/build/Tone.js';
+            script.onerror = function () {
+                console.error('📍[App] Tone.js 載入完全失敗');
+                alert('音訊庫載入失敗，請檢查網路連線後重新整理頁面');
+            };
+            document.head.appendChild(script);
+        }
+
+        // 驗證 Tone.js 是否正確載入
+        window.addEventListener('DOMContentLoaded', function () {
+            setTimeout(function () {
+                if (typeof Tone === 'undefined') {
+                    console.error('📍[App] Tone.js 未定義，嘗試重新載入');
+                    loadToneFallback();
+                } else {
+                    console.log('📍[App] Tone.js 載入成功:', Tone.version);
+                }
+            }, 100);
+        });
+    </script>
+
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dark bg-surface-950 text-white font-['Inter'] min-h-screen">
+    <!-- 背景裝飾 -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary-500/10 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl"></div>
+    </div>
+
+    <main class="relative z-10 container mx-auto px-4 py-8 max-w-7xl">
+        <!-- 標題區 -->
+        <header class="text-center mb-8">
+            <h1
+                class="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent mb-2">
+                🎹 YouTube 鋼琴視覺化
+            </h1>
+            <p class="text-surface-100/60 text-sm md:text-base">
+                將 YouTube 純鋼琴音樂轉換為 MIDI 並即時視覺化播放
+            </p>
+        </header>
+
+        <!-- 輸入區 -->
+        <section id="input-section" class="mb-8">
+            <div class="max-w-2xl mx-auto">
+                <div class="bg-surface-800/50 backdrop-blur-xl rounded-2xl p-6 border border-white/5 shadow-xl">
+                    <label for="youtube-url" class="block text-sm font-medium text-surface-100/80 mb-2">
+                        YouTube 網址
+                    </label>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <input type="url" id="youtube-url" value="https://youtu.be/tHLz4CttzDE"
+                            placeholder="https://www.youtube.com/watch?v=..."
+                            class="flex-1 bg-surface-900/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-surface-100/40 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 transition-all">
+                        <button id="analyze-btn"
+                            class="bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-400 hover:to-primary-500 text-white font-semibold px-6 py-3 rounded-xl shadow-lg shadow-primary-500/25 hover:shadow-primary-500/40 transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                            </svg>
+                            <span>開始分析</span>
+                        </button>
+                    </div>
+
+                    <!-- 範例連結 -->
+                    <div class="mt-4 text-xs text-surface-100/50">
+                        <span>提示：請使用純鋼琴獨奏影片，效果最佳（限 10 分鐘內）</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 進度區 -->
+        <section id="progress-section" class="mb-8 hidden">
+            <div class="max-w-2xl mx-auto">
+                <div class="bg-surface-800/50 backdrop-blur-xl rounded-2xl p-6 border border-white/5 shadow-xl">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="relative">
+                            <div
+                                class="w-12 h-12 border-4 border-primary-500/30 border-t-primary-500 rounded-full animate-spin">
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <h3 id="progress-title" class="font-semibold text-white mb-1">處理中...</h3>
+                            <p id="progress-message" class="text-sm text-surface-100/60">正在下載音訊...</p>
+                        </div>
+                        <span id="progress-percent" class="text-2xl font-bold text-primary-400">0%</span>
+                    </div>
+
+                    <!-- 進度條 -->
+                    <div class="h-2 bg-surface-900 rounded-full overflow-hidden">
+                        <div id="progress-bar"
+                            class="h-full bg-gradient-to-r from-primary-500 to-purple-500 transition-all duration-300 ease-out"
+                            style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 播放控制區 -->
+        <section id="player-section" class="mb-8 hidden">
+            <div class="bg-surface-800/50 backdrop-blur-xl rounded-2xl p-6 border border-white/5 shadow-xl">
+                <!-- 曲目資訊 -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <h2 id="track-title" class="text-xl font-bold text-white mb-1">載入中...</h2>
+                        <p id="track-info" class="text-sm text-surface-100/60">0 個音符 · 0:00</p>
+                    </div>
+
+                    <!-- 播放控制 -->
+                    <div class="flex items-center gap-3">
+                        <button id="play-btn"
+                            class="w-14 h-14 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-400 hover:to-primary-500 rounded-full shadow-lg shadow-primary-500/25 flex items-center justify-center transition-all duration-300 disabled:opacity-50">
+                            <svg id="play-icon" class="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                            <svg id="pause-icon" class="w-6 h-6 text-white hidden" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
+                            </svg>
+                        </button>
+
+                        <button id="stop-btn"
+                            class="w-10 h-10 bg-surface-700 hover:bg-surface-600 rounded-full flex items-center justify-center transition-all">
+                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <rect x="6" y="6" width="12" height="12" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 時間軸 -->
+                <div class="mb-4">
+                    <div class="flex items-center gap-3">
+                        <span id="current-time" class="text-sm font-mono text-surface-100/80 w-12">0:00</span>
+                        <div class="flex-1 relative">
+                            <input type="range" id="seek-bar" min="0" max="100" value="0"
+                                class="w-full h-2 bg-surface-700 rounded-full appearance-none cursor-pointer accent-primary-500">
+                        </div>
+                        <span id="total-time" class="text-sm font-mono text-surface-100/80 w-12">0:00</span>
+                    </div>
+                </div>
+
+                <!-- 控制列：音量 + 速度 -->
+                <div class="flex flex-wrap items-center gap-6">
+                    <!-- 音量控制 -->
+                    <div class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-surface-100/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                        </svg>
+                        <input type="range" id="volume-bar" min="0" max="100" value="80"
+                            class="w-24 h-2 bg-surface-700 rounded-full appearance-none cursor-pointer accent-primary-500">
+                        <span id="volume-value" class="text-sm text-surface-100/60 w-8">80%</span>
+                    </div>
+
+                    <!-- 速度控制 -->
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs text-surface-100/50">慢</span>
+                        <input type="range" id="speed-bar" min="25" max="150" value="100"
+                            class="w-28 h-2 bg-surface-700 rounded-full appearance-none cursor-pointer accent-green-500">
+                        <span class="text-xs text-surface-100/50">快</span>
+                        <span id="speed-value" class="text-sm text-green-400 font-medium w-12">1.0x</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 鋼琴鍵盤區 -->
+        <section id="piano-section" class="hidden">
+            <!-- 瀑布流 + 鋼琴鍵盤 -->
+            <div class="bg-surface-800/50 backdrop-blur-xl rounded-2xl border border-white/5 shadow-xl overflow-x-auto">
+                <!-- 內部容器 - 統一 padding -->
+                <div class="px-4 md:px-6">
+                    <!-- 瀑布流視覺化 -->
+                    <div class="pt-4">
+                        <div id="waterfall-container" class="h-48 md:h-64 rounded-lg overflow-hidden"
+                            style="background: #1a1a2e;">
+                        </div>
+                    </div>
+
+                    <!-- 鋼琴鍵盤 - 與瀑布流相同寬度 -->
+                    <div class="pb-4">
+                        <div id="piano-container">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 即時顯示 -->
+            <div class="mt-4 flex flex-wrap justify-center gap-2">
+                <div class="bg-surface-800/30 rounded-lg px-4 py-2 text-center">
+                    <span class="text-surface-100/50 text-xs">當前音符</span>
+                    <p id="current-notes" class="text-primary-400 font-mono text-lg">-</p>
+                </div>
+                <div class="bg-surface-800/30 rounded-lg px-4 py-2 text-center">
+                    <span class="text-surface-100/50 text-xs">播放進度</span>
+                    <p id="notes-played" class="text-purple-400 font-mono text-lg">0 / 0</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 載入提示 (音色載入) -->
+        <div id="loading-overlay"
+            class="fixed inset-0 bg-surface-950/90 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+            <div class="text-center">
+                <div
+                    class="w-16 h-16 border-4 border-primary-500/30 border-t-primary-500 rounded-full animate-spin mx-auto mb-4">
+                </div>
+                <p id="loading-text" class="text-white font-medium">載入鋼琴音色中...</p>
+                <p class="text-surface-100/50 text-sm mt-2">首次載入可能需要數秒</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast 通知 -->
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2"></div>
+
+    <script src="piano.js"></script>
+    <script src="waterfall.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

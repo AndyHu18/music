@@ -1,0 +1,22 @@
+# YouTube Piano Visualizer - Backend Dependencies
+# Python 3.11+ required
+# FFmpeg must be installed and in PATH
+
+# Web Framework
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+python-multipart>=0.0.6
+
+# Audio Download
+yt-dlp>=2024.8.6
+
+# Audio to MIDI Transcription (Spotify's AI model)
+basic-pitch>=0.3.0
+
+# Audio preprocessing
+ffmpeg-python>=0.2.0
+
+# Async file operations
+aiofiles>=23.2.1
+
+# CORS support
