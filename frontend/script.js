@@ -189,8 +189,7 @@ async function loadBuiltInSong(songId) {
     // 設定資料
     notesData = songData;
 
-    // 隱藏輸入區，顯示播放器
-    elements.inputSection.classList.add('hidden');
+    // 顯示播放器和鋼琴區域（不隱藏輸入區，讓歌曲按鈕隨時可選）
     elements.progressSection.classList.add('hidden');
     elements.playerSection.classList.remove('hidden');
     elements.pianoSection.classList.remove('hidden');
