@@ -19,11 +19,8 @@ COPY backend/ ./backend/
 # Copy frontend code
 COPY frontend/ ./frontend/
 
-# Railway uses PORT env variable
-ENV PORT=8000
-
 # Expose port
-EXPOSE $PORT
+EXPOSE 8000
 
-# Start command - use shell form to expand $PORT
-CMD uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+# Start command - use sh -c to properly expand $PORT
+CMD ["sh", "-c", "uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
