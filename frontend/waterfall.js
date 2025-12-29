@@ -18,6 +18,7 @@ class WaterfallRenderer {
             noteHeight: options.noteHeight || 6,
             lookahead: options.lookahead || 2,
             backgroundColor: options.backgroundColor || '#1a1a2e',
+            kidsMode: options.kidsMode || false,
             ...options
         };
 
@@ -27,9 +28,14 @@ class WaterfallRenderer {
         this.currentTime = 0;
         this.animationId = null;
 
-        // 鋼琴鍵映射
-        this.minPitch = 21;
-        this.maxPitch = 108;
+        // 鋼琴鍵映射（兒童模式只顯示 2 個八度）
+        if (this.options.kidsMode) {
+            this.minPitch = 60; // C4
+            this.maxPitch = 83; // B5
+        } else {
+            this.minPitch = 21;
+            this.maxPitch = 108;
+        }
         this.noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
         // 🌈 彩虹顏色系統 - 與 piano.js 一致

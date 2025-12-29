@@ -189,6 +189,9 @@ async function loadBuiltInSong(songId) {
     // 設定資料
     notesData = songData;
 
+    // 🎹 切換到兒童模式（更大的琴鍵，只顯示 2 個八度）
+    switchToKidsMode(true);
+
     // 顯示播放器和鋼琴區域（不隱藏輸入區，讓歌曲按鈕隨時可選）
     elements.progressSection.classList.add('hidden');
     elements.playerSection.classList.remove('hidden');
@@ -217,6 +220,41 @@ async function loadBuiltInSong(songId) {
     setTimeout(() => {
         togglePlay();
     }, 500);
+}
+
+/**
+ * 切換兒童模式（更大的琴鍵）
+ */
+function switchToKidsMode(enabled) {
+    const pianoContainer = document.getElementById('piano-container');
+
+    // 清除現有鍵盤
+    if (piano) {
+        pianoContainer.innerHTML = '';
+    }
+
+    // 重新創建鍵盤
+    piano = new PianoKeyboard('piano-container', { kidsMode: enabled });
+
+    // 重新創建瀑布流（匹配琴鍵範圍）
+    const waterfallContainer = document.getElementById('waterfall-container');
+    if (waterfall) {
+        waterfallContainer.innerHTML = '';
+    }
+
+    waterfall = new WaterfallRenderer('waterfall-container', {
+        pixelsPerSecond: 150,
+        noteHeight: 6,
+        lookahead: 2,
+        kidsMode: enabled,
+        noteColors: {
+            white: '#4ecdc4',
+            black: '#ff6b6b',
+            gradient: true
+        }
+    });
+
+    console.log('📍[App] 兒童模式:', enabled ? '開啟' : '關閉');
 }
 
 // ========================================

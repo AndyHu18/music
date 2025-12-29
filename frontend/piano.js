@@ -4,14 +4,22 @@
  */
 
 class PianoKeyboard {
-    constructor(containerId) {
+    constructor(containerId, options = {}) {
         this.container = document.getElementById(containerId);
         this.keys = new Map();
         this.activeKeys = new Set();
         this.particles = []; // 粒子效果陣列
 
-        this.minPitch = 21;
-        this.maxPitch = 108;
+        // 兒童模式：只顯示 2 個八度 (C4-B5)，琴鍵更大
+        this.kidsMode = options.kidsMode || false;
+
+        if (this.kidsMode) {
+            this.minPitch = 60; // C4
+            this.maxPitch = 83; // B5
+        } else {
+            this.minPitch = 21;
+            this.maxPitch = 108;
+        }
 
         this.noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
