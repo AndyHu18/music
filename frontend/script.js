@@ -162,6 +162,65 @@ function handleVisibilityChange() {
 }
 
 // ========================================
+// 內建曲目載入
+// ========================================
+
+/**
+ * 載入內建練習曲
+ */
+async function loadBuiltInSong(songId) {
+    console.log('📍[App] 載入內建曲目:', songId);
+
+    // 獲取曲目資料
+    const songData = getBuiltInSong(songId);
+    if (!songData) {
+        showToast('找不到該曲目', 'error');
+        return;
+    }
+
+    // 顯示載入中
+    showToast(`載入中: ${songData.metadata.title}`, 'info');
+
+    // 停止當前播放
+    if (isPlaying) {
+        stopPlayback();
+    }
+
+    // 設定資料
+    notesData = songData;
+
+    // 隱藏輸入區，顯示播放器
+    elements.inputSection.classList.add('hidden');
+    elements.progressSection.classList.add('hidden');
+    elements.playerSection.classList.remove('hidden');
+    elements.pianoSection.classList.remove('hidden');
+
+    // 更新曲目資訊
+    elements.trackTitle.textContent = songData.metadata.title;
+    elements.trackInfo.textContent = `${songData.metadata.note_count} 個音符 · ${formatTime(songData.metadata.total_duration)}`;
+    elements.totalTime.textContent = formatTime(songData.metadata.total_duration);
+    elements.notesPlayed.textContent = `0 / ${songData.metadata.note_count}`;
+
+    // 載入音符到瀑布流渲染器
+    if (waterfall && songData.notes) {
+        waterfall.resize();
+        waterfall.loadNotes(songData.notes);
+    }
+
+    // 載入音色
+    await loadPianoSampler();
+
+    // 準備播放
+    preparePlayback();
+
+    // 自動開始播放
+    showToast('開始播放！跟著鋼琴一起學習', 'success');
+    setTimeout(() => {
+        togglePlay();
+    }, 500);
+}
+
+// ========================================
 // API 互動
 // ========================================
 
