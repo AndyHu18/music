@@ -151,7 +151,12 @@ class PianoKeyboard {
 
     positionBlackKeys(keyboard) {
         let whiteKeyIndex = 0;
-        const whiteKeyWidth = this.getWhiteKeyWidth();
+
+        // 計算白鍵總數
+        let totalWhiteKeys = 0;
+        for (let p = this.minPitch; p <= this.maxPitch; p++) {
+            if (!this.noteNames[p % 12].includes('#')) totalWhiteKeys++;
+        }
 
         for (let pitch = this.minPitch; pitch <= this.maxPitch; pitch++) {
             const noteName = this.noteNames[pitch % 12];
@@ -159,7 +164,16 @@ class PianoKeyboard {
 
             if (isBlackKey) {
                 const key = this.keys.get(pitch);
-                key.style.left = `${whiteKeyIndex * whiteKeyWidth}px`;
+
+                if (this.kidsMode) {
+                    // 兒童模式：使用百分比定位
+                    const percent = (whiteKeyIndex / totalWhiteKeys) * 100;
+                    key.style.left = `${percent}%`;
+                } else {
+                    // 普通模式：使用固定像素
+                    const whiteKeyWidth = this.getWhiteKeyWidth();
+                    key.style.left = `${whiteKeyIndex * whiteKeyWidth}px`;
+                }
                 keyboard.appendChild(key);
             } else {
                 whiteKeyIndex++;

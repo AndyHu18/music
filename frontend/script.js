@@ -726,6 +726,57 @@ function stopPlayback() {
 }
 
 /**
+ * 播放完成後的處理（自動播放下一首）
+ */
+function onPlaybackComplete() {
+    // 先停止當前播放
+    Tone.Transport.stop();
+    Tone.Transport.position = 0;
+    isPlaying = false;
+    totalPlayedNotes = 0;
+    piano.allKeysUp();
+    if (waterfall) waterfall.stop();
+    updatePlayButton(false);
+    updateTimeDisplay(0);
+    updatePlayedNotesDisplay();
+    elements.seekBar.value = 0;
+
+    // 🎵 自動播放下一首（僅限內建曲目）
+    if (notesData?.metadata?.source === 'built-in') {
+        showToast('🎉 播放完成！隨機播放下一首...', 'success');
+        setTimeout(() => {
+            playRandomBuiltInSong();
+        }, 1500);
+    } else {
+        showToast('🎉 播放完成！', 'success');
+    }
+}
+
+/**
+ * 隨機播放內建曲目
+ */
+function playRandomBuiltInSong() {
+    const songIds = Object.keys(BUILT_IN_SONGS);
+    // 避免重複播放同一首
+    const currentTitle = notesData?.metadata?.title;
+    let availableSongs = songIds.filter(id => {
+        const song = BUILT_IN_SONGS[id];
+        return song.title !== currentTitle;
+    });
+
+    // 如果只有一首歌，就重複播放
+    if (availableSongs.length === 0) {
+        availableSongs = songIds;
+    }
+
+    const randomIndex = Math.floor(Math.random() * availableSongs.length);
+    const randomSongId = availableSongs[randomIndex];
+
+    console.log('📍[App] 隨機選擇曲目:', randomSongId);
+    loadBuiltInSong(randomSongId);
+}
+
+/**
  * 處理進度拖曳
  */
 function handleSeek(e) {
@@ -783,7 +834,7 @@ function startTimeUpdate() {
 
         // 檢查是否播放完畢
         if (currentSeconds >= totalDuration) {
-            stopPlayback();
+            onPlaybackComplete();
             return;
         }
 

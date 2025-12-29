@@ -122,10 +122,14 @@ input[type="range"]::-moz-range-thumb {
 
 /* 兒童模式黑鍵 */
 .piano-keyboard.kids-mode .piano-key.black {
-    width: 60% !important;
-    min-width: 30px;
-    height: 65%;
-    margin-left: -30%;
+    /* 黑鍵寬度：白鍵的 55-60%，更接近真實鋼琴比例 */
+    width: calc(100% / 14 * 0.55) !important;
+    min-width: 35px;
+    /* 黑鍵高度：白鍵的 60%，標準鋼琴比例 */
+    height: 60% !important;
+    /* 向左偏移自身寬度的一半 */
+    transform: translateX(-50%);
+    margin-left: 0;
 }
 
 /* 白鍵 */
