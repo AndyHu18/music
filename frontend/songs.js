@@ -225,6 +225,171 @@ const BUILT_IN_SONGS = {
             { pitch: 67, start_time: 13.5, duration: 0.5, velocity: 80 },
             { pitch: 64, start_time: 14.0, duration: 1.5, velocity: 80 },
         ]
+    },
+
+    // 划船歌 (Row Row Row Your Boat)
+    'row': {
+        title: '划船歌 (Row Your Boat)',
+        level: '初級',
+        notes: [
+            // C C C D E
+            { pitch: 60, start_time: 0.0, duration: 0.75, velocity: 80 },
+            { pitch: 60, start_time: 0.75, duration: 0.5, velocity: 80 },
+            { pitch: 60, start_time: 1.25, duration: 0.4, velocity: 80 },
+            { pitch: 62, start_time: 1.65, duration: 0.35, velocity: 80 },
+            { pitch: 64, start_time: 2.0, duration: 0.75, velocity: 80 },
+
+            // E D E F G
+            { pitch: 64, start_time: 2.75, duration: 0.4, velocity: 80 },
+            { pitch: 62, start_time: 3.15, duration: 0.35, velocity: 80 },
+            { pitch: 64, start_time: 3.5, duration: 0.4, velocity: 80 },
+            { pitch: 65, start_time: 3.9, duration: 0.35, velocity: 80 },
+            { pitch: 67, start_time: 4.25, duration: 1.0, velocity: 80 },
+
+            // C C C G G G E E E C C C
+            { pitch: 72, start_time: 5.25, duration: 0.25, velocity: 70 },
+            { pitch: 72, start_time: 5.5, duration: 0.25, velocity: 70 },
+            { pitch: 72, start_time: 5.75, duration: 0.25, velocity: 70 },
+            { pitch: 67, start_time: 6.0, duration: 0.25, velocity: 70 },
+            { pitch: 67, start_time: 6.25, duration: 0.25, velocity: 70 },
+            { pitch: 67, start_time: 6.5, duration: 0.25, velocity: 70 },
+            { pitch: 64, start_time: 6.75, duration: 0.25, velocity: 70 },
+            { pitch: 64, start_time: 7.0, duration: 0.25, velocity: 70 },
+            { pitch: 64, start_time: 7.25, duration: 0.25, velocity: 70 },
+            { pitch: 60, start_time: 7.5, duration: 0.25, velocity: 70 },
+            { pitch: 60, start_time: 7.75, duration: 0.25, velocity: 70 },
+            { pitch: 60, start_time: 8.0, duration: 0.25, velocity: 70 },
+
+            // G F E D C
+            { pitch: 67, start_time: 8.25, duration: 0.4, velocity: 80 },
+            { pitch: 65, start_time: 8.65, duration: 0.35, velocity: 80 },
+            { pitch: 64, start_time: 9.0, duration: 0.4, velocity: 80 },
+            { pitch: 62, start_time: 9.4, duration: 0.35, velocity: 80 },
+            { pitch: 60, start_time: 9.75, duration: 1.0, velocity: 80 },
+        ]
+    },
+
+    // 倫敦鐵橋 (London Bridge)
+    'london': {
+        title: '倫敦鐵橋 (London Bridge)',
+        level: '初級',
+        notes: [
+            // G A G F E F G
+            { pitch: 67, start_time: 0.0, duration: 0.75, velocity: 80 },
+            { pitch: 69, start_time: 0.75, duration: 0.25, velocity: 80 },
+            { pitch: 67, start_time: 1.0, duration: 0.5, velocity: 80 },
+            { pitch: 65, start_time: 1.5, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 2.0, duration: 0.5, velocity: 80 },
+            { pitch: 65, start_time: 2.5, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 3.0, duration: 1.0, velocity: 80 },
+
+            // D E F - E F G
+            { pitch: 62, start_time: 4.0, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 4.5, duration: 0.5, velocity: 80 },
+            { pitch: 65, start_time: 5.0, duration: 1.0, velocity: 80 },
+            { pitch: 64, start_time: 6.0, duration: 0.5, velocity: 80 },
+            { pitch: 65, start_time: 6.5, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 7.0, duration: 1.0, velocity: 80 },
+
+            // G A G F E F G - D G E C
+            { pitch: 67, start_time: 8.0, duration: 0.75, velocity: 80 },
+            { pitch: 69, start_time: 8.75, duration: 0.25, velocity: 80 },
+            { pitch: 67, start_time: 9.0, duration: 0.5, velocity: 80 },
+            { pitch: 65, start_time: 9.5, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 10.0, duration: 0.5, velocity: 80 },
+            { pitch: 65, start_time: 10.5, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 11.0, duration: 1.0, velocity: 80 },
+            { pitch: 62, start_time: 12.0, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 12.5, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 13.0, duration: 0.5, velocity: 80 },
+            { pitch: 60, start_time: 13.5, duration: 1.5, velocity: 80 },
+        ]
+    },
+
+    // 小毛驢
+    'donkey': {
+        title: '小毛驢',
+        level: '初級',
+        notes: [
+            // G G E E G G E
+            { pitch: 67, start_time: 0.0, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 0.5, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 1.0, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 1.5, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 2.0, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 2.5, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 3.0, duration: 1.0, velocity: 80 },
+
+            // D D E E D
+            { pitch: 62, start_time: 4.0, duration: 0.5, velocity: 80 },
+            { pitch: 62, start_time: 4.5, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 5.0, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 5.5, duration: 0.5, velocity: 80 },
+            { pitch: 62, start_time: 6.0, duration: 2.0, velocity: 80 },
+
+            // G G E E G G E
+            { pitch: 67, start_time: 8.0, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 8.5, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 9.0, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 9.5, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 10.0, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 10.5, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 11.0, duration: 1.0, velocity: 80 },
+
+            // D D E D C
+            { pitch: 62, start_time: 12.0, duration: 0.5, velocity: 80 },
+            { pitch: 62, start_time: 12.5, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 13.0, duration: 0.5, velocity: 80 },
+            { pitch: 62, start_time: 13.5, duration: 0.5, velocity: 80 },
+            { pitch: 60, start_time: 14.0, duration: 2.0, velocity: 80 },
+        ]
+    },
+
+    // 兩隻老虎
+    'tigers': {
+        title: '兩隻老虎',
+        level: '初級',
+        notes: [
+            // C D E C C D E C
+            { pitch: 60, start_time: 0.0, duration: 0.5, velocity: 80 },
+            { pitch: 62, start_time: 0.5, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 1.0, duration: 0.5, velocity: 80 },
+            { pitch: 60, start_time: 1.5, duration: 0.5, velocity: 80 },
+            { pitch: 60, start_time: 2.0, duration: 0.5, velocity: 80 },
+            { pitch: 62, start_time: 2.5, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 3.0, duration: 0.5, velocity: 80 },
+            { pitch: 60, start_time: 3.5, duration: 0.5, velocity: 80 },
+
+            // E F G E F G
+            { pitch: 64, start_time: 4.0, duration: 0.5, velocity: 80 },
+            { pitch: 65, start_time: 4.5, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 5.0, duration: 1.0, velocity: 80 },
+            { pitch: 64, start_time: 6.0, duration: 0.5, velocity: 80 },
+            { pitch: 65, start_time: 6.5, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 7.0, duration: 1.0, velocity: 80 },
+
+            // G A G F E C G A G F E C
+            { pitch: 67, start_time: 8.0, duration: 0.25, velocity: 80 },
+            { pitch: 69, start_time: 8.25, duration: 0.25, velocity: 80 },
+            { pitch: 67, start_time: 8.5, duration: 0.25, velocity: 80 },
+            { pitch: 65, start_time: 8.75, duration: 0.25, velocity: 80 },
+            { pitch: 64, start_time: 9.0, duration: 0.5, velocity: 80 },
+            { pitch: 60, start_time: 9.5, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 10.0, duration: 0.25, velocity: 80 },
+            { pitch: 69, start_time: 10.25, duration: 0.25, velocity: 80 },
+            { pitch: 67, start_time: 10.5, duration: 0.25, velocity: 80 },
+            { pitch: 65, start_time: 10.75, duration: 0.25, velocity: 80 },
+            { pitch: 64, start_time: 11.0, duration: 0.5, velocity: 80 },
+            { pitch: 60, start_time: 11.5, duration: 0.5, velocity: 80 },
+
+            // C G C - C G C
+            { pitch: 60, start_time: 12.0, duration: 0.5, velocity: 80 },
+            { pitch: 55, start_time: 12.5, duration: 0.5, velocity: 80 },
+            { pitch: 60, start_time: 13.0, duration: 1.0, velocity: 80 },
+            { pitch: 60, start_time: 14.0, duration: 0.5, velocity: 80 },
+            { pitch: 55, start_time: 14.5, duration: 0.5, velocity: 80 },
+            { pitch: 60, start_time: 15.0, duration: 1.0, velocity: 80 },
+        ]
     }
 };
 
