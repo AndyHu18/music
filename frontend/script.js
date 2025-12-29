@@ -314,8 +314,14 @@ async function handleAnalysisComplete(result) {
     // 準備播放
     preparePlayback();
 
-    showToast('分析完成！點擊播放開始視覺化', 'success');
+    // 🎵 自動開始播放
+    showToast('分析完成！自動開始播放...', 'success');
     elements.analyzeBtn.disabled = false;
+
+    // 延遲一小段時間讓 UI 更新完成後自動播放
+    setTimeout(() => {
+        togglePlay();
+    }, 500);
 }
 
 // ========================================
