@@ -161,6 +161,26 @@
                             class="song-btn bg-gradient-to-r from-purple-500/20 to-purple-600/20 hover:from-purple-500/40 hover:to-purple-600/40 border border-purple-500/30 text-white px-3 py-2 rounded-xl transition-all text-sm">
                             🎂 生日快樂
                         </button>
+                        <button onclick="loadBuiltInSong('abc')"
+                            class="song-btn bg-gradient-to-r from-emerald-500/20 to-emerald-600/20 hover:from-emerald-500/40 hover:to-emerald-600/40 border border-emerald-500/30 text-white px-3 py-2 rounded-xl transition-all text-sm">
+                            🔤 ABC字母歌
+                        </button>
+                        <button onclick="loadBuiltInSong('jingle')"
+                            class="song-btn bg-gradient-to-r from-rose-500/20 to-rose-600/20 hover:from-rose-500/40 hover:to-rose-600/40 border border-rose-500/30 text-white px-3 py-2 rounded-xl transition-all text-sm">
+                            🔔 鈴兒響叮噹
+                        </button>
+                        <button onclick="loadBuiltInSong('lullaby')"
+                            class="song-btn bg-gradient-to-r from-violet-500/20 to-violet-600/20 hover:from-violet-500/40 hover:to-violet-600/40 border border-violet-500/30 text-white px-3 py-2 rounded-xl transition-all text-sm">
+                            🌙 搖籃曲
+                        </button>
+                        <button onclick="loadBuiltInSong('butterfly')"
+                            class="song-btn bg-gradient-to-r from-fuchsia-500/20 to-fuchsia-600/20 hover:from-fuchsia-500/40 hover:to-fuchsia-600/40 border border-fuchsia-500/30 text-white px-3 py-2 rounded-xl transition-all text-sm">
+                            🦋 蝴蝶
+                        </button>
+                        <button onclick="loadBuiltInSong('mama')"
+                            class="song-btn bg-gradient-to-r from-sky-500/20 to-sky-600/20 hover:from-sky-500/40 hover:to-sky-600/40 border border-sky-500/30 text-white px-3 py-2 rounded-xl transition-all text-sm">
+                            ❤️ 媽媽好
+                        </button>
                     </div>
                 </div>
 
@@ -193,6 +213,16 @@
                     <!-- 範例連結 -->
                     <div class="mt-4 text-xs text-surface-100/50">
                         <span>提示：請使用純鋼琴獨奏影片，效果最佳（限 10 分鐘內）</span>
+                    </div>
+                </div>
+
+                <!-- 歷史記錄 -->
+                <div class="bg-surface-800/50 backdrop-blur-xl rounded-2xl p-6 border border-white/5 shadow-xl">
+                    <label class="block text-sm font-medium text-surface-100/80 mb-3">
+                        📼 我的樂譜（YouTube 導入後自動保存）
+                    </label>
+                    <div id="history-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                        <p class="text-sm text-surface-100/50 col-span-full">尚無歷史記錄</p>
                     </div>
                 </div>
             </div>

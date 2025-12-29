@@ -74,6 +74,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
+    // 載入歷史記錄 UI
+    updateHistoryUI();
+
     console.log('📍[App] 初始化完成');
 });
 
@@ -433,6 +436,9 @@ async function handleAnalysisComplete(result) {
         waterfall.loadNotes(result.notes);
     }
 
+    // 💾 保存到 localStorage 供下次使用
+    saveSongToHistory(result);
+
     // 載入音色
     await loadPianoSampler();
 
@@ -447,6 +453,103 @@ async function handleAnalysisComplete(result) {
     setTimeout(() => {
         togglePlay();
     }, 500);
+}
+
+/**
+ * 保存曲目到歷史記錄（localStorage）
+ */
+function saveSongToHistory(songData) {
+    try {
+        const history = JSON.parse(localStorage.getItem('piano_songs_history') || '[]');
+
+        // 檢查是否已存在（用標題判斷）
+        const title = songData.metadata?.title || 'Unknown';
+        const existingIndex = history.findIndex(s => s.metadata?.title === title);
+
+        if (existingIndex >= 0) {
+            // 更新現有記錄
+            history[existingIndex] = songData;
+        } else {
+            // 添加新記錄（最多保存 20 首）
+            history.unshift(songData);
+            if (history.length > 20) {
+                history.pop();
+            }
+        }
+
+        localStorage.setItem('piano_songs_history', JSON.stringify(history));
+        console.log('📍[App] 已保存到歷史記錄:', title);
+
+        // 更新歷史列表 UI
+        updateHistoryUI();
+    } catch (e) {
+        console.error('📍[App] 保存歷史記錄失敗:', e);
+    }
+}
+
+/**
+ * 獲取歷史記錄
+ */
+function getSongHistory() {
+    try {
+        return JSON.parse(localStorage.getItem('piano_songs_history') || '[]');
+    } catch (e) {
+        return [];
+    }
+}
+
+/**
+ * 載入歷史記錄中的曲目
+ */
+async function loadFromHistory(index) {
+    const history = getSongHistory();
+    if (index >= 0 && index < history.length) {
+        const songData = history[index];
+        notesData = songData;
+
+        // 不使用兒童模式（因為是 YouTube 來的可能需要完整鍵盤）
+        switchToKidsMode(false);
+
+        elements.progressSection.classList.add('hidden');
+        elements.playerSection.classList.remove('hidden');
+        elements.pianoSection.classList.remove('hidden');
+
+        const title = songData.metadata?.title || 'Unknown';
+        elements.trackTitle.textContent = title;
+        elements.trackInfo.textContent = `${songData.metadata?.note_count || 0} 個音符`;
+
+        if (waterfall && songData.notes) {
+            waterfall.resize();
+            waterfall.loadNotes(songData.notes);
+        }
+
+        await loadPianoSampler();
+        preparePlayback();
+
+        showToast(`載入: ${title}`, 'success');
+        setTimeout(() => togglePlay(), 500);
+    }
+}
+
+/**
+ * 更新歷史記錄 UI
+ */
+function updateHistoryUI() {
+    const historyContainer = document.getElementById('history-container');
+    if (!historyContainer) return;
+
+    const history = getSongHistory();
+    if (history.length === 0) {
+        historyContainer.innerHTML = '<p class="text-sm text-surface-100/50">尚無歷史記錄</p>';
+        return;
+    }
+
+    historyContainer.innerHTML = history.map((song, index) => `
+        <button onclick="loadFromHistory(${index})" 
+            class="song-btn bg-gradient-to-r from-indigo-500/20 to-indigo-600/20 hover:from-indigo-500/40 hover:to-indigo-600/40 border border-indigo-500/30 text-white px-3 py-2 rounded-xl transition-all text-sm text-left truncate">
+            📼 ${song.metadata?.title || 'Unknown'}
+        </button>
+    `).join('');
 }
 
 // ========================================

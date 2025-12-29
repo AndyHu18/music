@@ -390,6 +390,173 @@ const BUILT_IN_SONGS = {
             { pitch: 55, start_time: 14.5, duration: 0.5, velocity: 80 },
             { pitch: 60, start_time: 15.0, duration: 1.0, velocity: 80 },
         ]
+    },
+
+    // 搖籃曲 (簡化版)
+    'lullaby': {
+        title: '搖籃曲 (Lullaby)',
+        level: '初級',
+        notes: [
+            // C E G E C E G E
+            { pitch: 60, start_time: 0.0, duration: 0.75, velocity: 70 },
+            { pitch: 64, start_time: 0.75, duration: 0.75, velocity: 70 },
+            { pitch: 67, start_time: 1.5, duration: 0.75, velocity: 70 },
+            { pitch: 64, start_time: 2.25, duration: 0.75, velocity: 70 },
+            { pitch: 60, start_time: 3.0, duration: 0.75, velocity: 70 },
+            { pitch: 64, start_time: 3.75, duration: 0.75, velocity: 70 },
+            { pitch: 67, start_time: 4.5, duration: 0.75, velocity: 70 },
+            { pitch: 64, start_time: 5.25, duration: 0.75, velocity: 70 },
+
+            // A G F E D C
+            { pitch: 69, start_time: 6.0, duration: 0.5, velocity: 70 },
+            { pitch: 67, start_time: 6.5, duration: 0.5, velocity: 70 },
+            { pitch: 65, start_time: 7.0, duration: 0.5, velocity: 70 },
+            { pitch: 64, start_time: 7.5, duration: 0.5, velocity: 70 },
+            { pitch: 62, start_time: 8.0, duration: 0.5, velocity: 70 },
+            { pitch: 60, start_time: 8.5, duration: 1.5, velocity: 70 },
+        ]
+    },
+
+    // ABC 字母歌 (和小星星旋律一樣)
+    'abc': {
+        title: 'ABC 字母歌',
+        level: '初級',
+        notes: [
+            // A B C D E F G (CCGGAAG)
+            { pitch: 60, start_time: 0.0, duration: 0.5, velocity: 80 },
+            { pitch: 60, start_time: 0.5, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 1.0, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 1.5, duration: 0.5, velocity: 80 },
+            { pitch: 69, start_time: 2.0, duration: 0.5, velocity: 80 },
+            { pitch: 69, start_time: 2.5, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 3.0, duration: 1.0, velocity: 80 },
+
+            // H I J K (FFEE)
+            { pitch: 65, start_time: 4.0, duration: 0.5, velocity: 80 },
+            { pitch: 65, start_time: 4.5, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 5.0, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 5.5, duration: 0.5, velocity: 80 },
+
+            // L M N O P (DDDC)
+            { pitch: 62, start_time: 6.0, duration: 0.4, velocity: 80 },
+            { pitch: 62, start_time: 6.4, duration: 0.4, velocity: 80 },
+            { pitch: 62, start_time: 6.8, duration: 0.4, velocity: 80 },
+            { pitch: 60, start_time: 7.2, duration: 0.8, velocity: 80 },
+        ]
+    },
+
+    // 鈴兒響叮噹 (Jingle Bells 簡化版)
+    'jingle': {
+        title: '鈴兒響叮噹',
+        level: '初級',
+        notes: [
+            // E E E - E E E - E G C D E
+            { pitch: 64, start_time: 0.0, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 0.5, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 1.0, duration: 1.0, velocity: 80 },
+            { pitch: 64, start_time: 2.0, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 2.5, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 3.0, duration: 1.0, velocity: 80 },
+            { pitch: 64, start_time: 4.0, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 4.5, duration: 0.5, velocity: 80 },
+            { pitch: 60, start_time: 5.0, duration: 0.5, velocity: 80 },
+            { pitch: 62, start_time: 5.5, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 6.0, duration: 2.0, velocity: 80 },
+
+            // F F F F F E E E E D D E D G
+            { pitch: 65, start_time: 8.0, duration: 0.5, velocity: 80 },
+            { pitch: 65, start_time: 8.5, duration: 0.5, velocity: 80 },
+            { pitch: 65, start_time: 9.0, duration: 0.5, velocity: 80 },
+            { pitch: 65, start_time: 9.5, duration: 0.5, velocity: 80 },
+            { pitch: 65, start_time: 10.0, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 10.5, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 11.0, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 11.5, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 12.0, duration: 0.5, velocity: 80 },
+            { pitch: 62, start_time: 12.5, duration: 0.5, velocity: 80 },
+            { pitch: 62, start_time: 13.0, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 13.5, duration: 0.5, velocity: 80 },
+            { pitch: 62, start_time: 14.0, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 14.5, duration: 1.5, velocity: 80 },
+        ]
+    },
+
+    // 蝴蝶
+    'butterfly': {
+        title: '蝴蝶',
+        level: '初級',
+        notes: [
+            // G E E - F D D
+            { pitch: 67, start_time: 0.0, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 0.5, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 1.0, duration: 1.0, velocity: 80 },
+            { pitch: 65, start_time: 2.0, duration: 0.5, velocity: 80 },
+            { pitch: 62, start_time: 2.5, duration: 0.5, velocity: 80 },
+            { pitch: 62, start_time: 3.0, duration: 1.0, velocity: 80 },
+
+            // C D E F G G G
+            { pitch: 60, start_time: 4.0, duration: 0.5, velocity: 80 },
+            { pitch: 62, start_time: 4.5, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 5.0, duration: 0.5, velocity: 80 },
+            { pitch: 65, start_time: 5.5, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 6.0, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 6.5, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 7.0, duration: 1.0, velocity: 80 },
+
+            // G E E - F D D
+            { pitch: 67, start_time: 8.0, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 8.5, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 9.0, duration: 1.0, velocity: 80 },
+            { pitch: 65, start_time: 10.0, duration: 0.5, velocity: 80 },
+            { pitch: 62, start_time: 10.5, duration: 0.5, velocity: 80 },
+            { pitch: 62, start_time: 11.0, duration: 1.0, velocity: 80 },
+
+            // C E G G C
+            { pitch: 60, start_time: 12.0, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 12.5, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 13.0, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 13.5, duration: 0.5, velocity: 80 },
+            { pitch: 60, start_time: 14.0, duration: 2.0, velocity: 80 },
+        ]
+    },
+
+    // 世上只有媽媽好
+    'mama': {
+        title: '世上只有媽媽好',
+        level: '初級',
+        notes: [
+            // G E G A G E G
+            { pitch: 67, start_time: 0.0, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 0.5, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 1.0, duration: 0.5, velocity: 80 },
+            { pitch: 69, start_time: 1.5, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 2.0, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 2.5, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 3.0, duration: 1.0, velocity: 80 },
+
+            // E D C D E
+            { pitch: 64, start_time: 4.0, duration: 0.5, velocity: 80 },
+            { pitch: 62, start_time: 4.5, duration: 0.5, velocity: 80 },
+            { pitch: 60, start_time: 5.0, duration: 0.5, velocity: 80 },
+            { pitch: 62, start_time: 5.5, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 6.0, duration: 2.0, velocity: 80 },
+
+            // G E G A G E G
+            { pitch: 67, start_time: 8.0, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 8.5, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 9.0, duration: 0.5, velocity: 80 },
+            { pitch: 69, start_time: 9.5, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 10.0, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 10.5, duration: 0.5, velocity: 80 },
+            { pitch: 67, start_time: 11.0, duration: 1.0, velocity: 80 },
+
+            // E D E D C
+            { pitch: 64, start_time: 12.0, duration: 0.5, velocity: 80 },
+            { pitch: 62, start_time: 12.5, duration: 0.5, velocity: 80 },
+            { pitch: 64, start_time: 13.0, duration: 0.5, velocity: 80 },
+            { pitch: 62, start_time: 13.5, duration: 0.5, velocity: 80 },
+            { pitch: 60, start_time: 14.0, duration: 2.0, velocity: 80 },
+        ]
     }
 };
 
