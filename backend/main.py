@@ -224,9 +224,17 @@ async def health_check():
 
 
 # 靜態檔案服務 (前端)
-frontend_path = Path(__file__).parent.parent / "frontend"
-if frontend_path.exists():
-    app.mount("/", StaticFiles(directory=str(frontend_path), html=True), name="frontend")
+# 支援本地開發和 Docker 部署兩種路徑
+frontend_paths = [
+    Path(__file__).parent.parent / "frontend",  # 本地開發
+    Path("/app/frontend"),  # Docker 部署
+]
+
+for frontend_path in frontend_paths:
+    if frontend_path.exists():
+        print(f"📍[Server] 前端目錄: {frontend_path}")
+        app.mount("/", StaticFiles(directory=str(frontend_path), html=True), name="frontend")
+        break
 
 
 if __name__ == "__main__":
